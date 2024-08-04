@@ -4,7 +4,7 @@ const path = require('path');
 const emailHandler = require('./email-handler');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // Настройка хранения файлов с использованием multer
 const storage = multer.memoryStorage(); // Хранение в памяти для немедленной отправки
