@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            
+        }
+
+        .container {
+            width: 320px;
+            height: 640px;
+            border: 3px solid #ce2659;
+            border-radius: 10px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            background-color: #f5dfe9;
+            position: relative;
+            
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background-color: #fcd7e4;
+            
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .back-button svg {
+            vertical-align: middle;
+        }
+
+        .image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            border: 2px solid #ce2659;
+            margin-top: 30px;
+        }
+
+        .image1 {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            margin-top: 30px;
+            border-radius: 10px;
+            border: 2px solid #ce2659;
+        }
+
+        .image2 {
+            width: 70px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            margin: 0 auto;
+            
+        }
+
+        .description {
+            padding: 5px;
+            text-align: center;
+            color: black;
+        }
+
+         .description1 {
+            padding: 5px;
+            text-align: center;
+            color: black;
+            font-size: 12px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 5px;
+        }
+
+        .button {
+            width: 120px;
+            height: 60px;
+            background-color: #007BFF;
+            color: white;
+            border: 2px solid #ce2659;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .button2 {
+            width: 120px;
+            height: 60px;
+            background-color: #007BFF;
+            color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .button3 {
+            width: 40px;
+            height: 40px;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            text-align: center;
+            padding: 5px;
+            opacity: 1; /* Кнопка активна */
+            transition: opacity 0.3s;
+        }
+
+        .button3.disabled {
+            opacity: 0.2; /* Кнопка неактивна */
+            pointer-events: none; /* Отключаем возможность нажатия */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 3px;
+            margin-top: 10px;
+        }
+
+        
+
+        .form-group label {
+            display: block;
+            
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ce2659;
+            border-radius: 5px;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 3px;
+            color: black;
+        }
+
+        .social-links {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        .social-links li {
+            margin-bottom: 5px;
+        }
+
+        #photo-container {
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+}
+
+#video, #preview, #canvas {
+    width: 200px; /* Фиксированная ширина */
+    height: 300px; /* Фиксированная высота для соотношения сторон 4:3 */
+    background-color: #000;
+    border: 1px solid #ccc;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+        .photo-controls {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .photo-controls .button3 {
+            margin: 0 2px;
+        }
+
+        
+
+         .table {
+            width: 100%;
+            height: 150px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 3px;
+            margin-top: 10px;
+        }
+        .cell {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            
+        }
+        .cell img {
+            width: 100%;
+            height: 80px; /* image height */
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="container" id="start-window">
+    <div class="image" style="background-image: url('img/sv3.png');"></div>
+    <div class="description">
+        <h2>Hurry up and get involved</h2>
+        <p>Pony Mony is holding a contest for the best unicorn drawing for kids. The winners will receive a big pink pony.</p>
+        <p>In this form you can look at the participants' drawings and take part in the promotion.</p>
+    </div>
+    <div class="buttons">
+        <div class="button" style="background-image: url('img/sv1.png');" onclick="showWatch()"></div>
+        <div class="button" style="background-image: url('img/sv2.png');" onclick="showParticipate()"></div>
+    </div>
+       <div class="description1">
+    <p>Please note that user contact details are not published for privacy reasons. The event will take place on the MTP Facebook channel.</p>
+</div>
+</div>
+
+<div class="container hidden" id="watch-window">
+    <div class="back-button" onclick="goBack()">
+        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M19 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H19v-2z"/>
+        </svg>
+    </div>
+    <div class="image1" style="background-image: url('img/sv3.png');"></div>
+    <div class="description">
+        <button class="button2" onclick="window.open('https://www.example.com')" style="background-image: url('img/sv1.png');"></button>
+
+         <div class="image2" style="background-image: url('img/sv9.png');  margin-top: 10px;"></div>
+        <h3>Additional MTP resources</h3>
+        
+        
+        <div class="table">
+    <div class="cell">
+        <img src="img/sv5.png" alt="Image 1">
+    </div>
+    <div class="cell">
+        <img src="img/sv6.png" alt="Image 2">
+        
+    </div>
+    <div class="cell">
+        <img src="img/sv7.png" alt="Image 3">
+        
+    </div>
+    <div class="cell">
+        <img src="img/sv8.png" alt="Image 4">
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="container hidden" id="participate-window">
+    <div class="back-button" onclick="goBack()">
+        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M19 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H19v-2z"/>
+        </svg>
+    </div>
+    <div class="description">
+        <form id="participation-form">
+            <div class="form-group">
+<div>.
+                <label for="nickname">Nickname:</label>
+                <input type="text" id="nickname" name="nickname" pattern="[A-Za-z0-9]+" required>
+                <small>Allowed characters A-Z,a-z,0-9</small>
+            </div></div>
+            <div class="form-group">
+                
+                <select id="country" name="country" required>
+                    <option value="" disabled selected>Choose a country</option>
+                    <option value="United States">United States</option>
+                    <option value="Canada">Canada</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Germany">Germany</option>
+                    <option value="France">France</option>
+                    <option value="India">India</option>
+                </select>
+            </div>
+            <div class="form-group">
+               
+                <div style="display: flex; align-items: center;">
+                    <span style="padding: 8px; background-color: #e9ecef; border:1px solid #ccc;">+</span>
+                    <input type="text" id="phone" name="phone" pattern="[0-9]{1,}" required style="flex: 1; border-left: none;" placeholder="123456789">
+                </div>
+                <small>Allowed characters 0-9</small>
+            </div>
+            
+                <div id="photo-container">
+                    <video id="video" width="200" height="300" autoplay muted></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <img id="preview" style="display: none; width: 200px; height: 300px;">
+                    <div class="photo-controls">
+                        <div>
+                            <div class="button3" id="startCameraButton" onclick="startCamera()" style="background-image: url('img/ar1.png');"></div>
+                            <div class="button-label"></div>
+                        </div>
+                        <div>
+                            <div class="button3 disabled" id="takePhotoButton" onclick="takePhoto()" style="background-image: url('img/ar3.png');"></div>
+                            <div class="button-label"></div>
+                        </div>
+                        <div>
+                            <div class="button3 disabled" id="retryButton" onclick="retry()" style="background-image: url('img/ar5.png');"></div>
+                            <div class="button-label"></div>
+                        </div>
+                             
+                <input type="hidden" id="photoBlob" name="photoBlob">
+            </div>
+            <button type="submit" class="button">Send</button>
+        </form>
+    </div>
+</div>
+
+<script>
+let cameraStream;
+let photoBlob;
+const aspectRatio = 4 / 3; // Определим соотношение сторон 4:3 для фото
+
+// Сохранение данных формы в localStorage
+function saveFormData() {
+    const form = document.getElementById('participation-form');
+    localStorage.setItem('formData', JSON.stringify({
+        nickname: form.nickname.value,
+        country: form.country.value,
+        phone: form.phone.value
+    }));
+}
+
+// Загрузка данных формы из localStorage
+function loadFormData() {
+    const formData = JSON.parse(localStorage.getItem('formData'));
+    if (formData) {
+        const form = document.getElementById('participation-form');
+        form.nickname.value = formData.nickname;
+        form.country.value = formData.country;
+        form.phone.value = formData.phone;
+    }
+}
+
+// Показать форму для участия
+function showParticipate() {
+    document.getElementById('start-window').style.display = 'none';
+    document.getElementById('participate-window').style.display = 'block';
+    loadFormData();
+}
+
+// Показать окно просмотра
+function showWatch() {
+    document.getElementById('start-window').style.display = 'none';
+    document.getElementById('watch-window').style.display = 'block';
+}
+
+// Возврат на главный экран
+function goBack() {
+    document.getElementById('participate-window').style.display = 'none';
+    document.getElementById('watch-window').style.display = 'none';
+    document.getElementById('start-window').style.display = 'block';
+    stopCamera();
+}
+
+// Включение камеры
+function startCamera() {
+    const video = document.querySelector('#video');
+    const canvas = document.querySelector('#canvas');
+
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        .then(stream => {
+            cameraStream = stream;
+            video.srcObject = stream;
+
+            video.onloadedmetadata = () => {
+                // Устанавливаем размеры видео в зависимости от его соотношения сторон
+                const videoWidth = video.videoWidth;
+                const videoHeight = video.videoHeight;
+                const calculatedHeight = videoWidth / aspectRatio;
+
+                // Если высота видео больше расчетной, корректируем ширину
+                if (calculatedHeight <= videoHeight) {
+                    video.height = calculatedHeight;
+                } else {
+                    video.width = videoHeight * aspectRatio;
+                }
+
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+
+                document.getElementById('takePhotoButton').classList.remove('disabled');
+            };
+        })
+        .catch(error => console.error('Ошибка доступа к камере.', error));
+}
+
+// Отключение камеры
+function stopCamera() {
+    if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+    }
+}
+
+// Включение камеры
+function startCamera() {
+    const video = document.querySelector('#video');
+    const canvas = document.querySelector('#canvas');
+
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        .then(stream => {
+            cameraStream = stream;
+            video.srcObject = stream;
+
+            video.onloadedmetadata = () => {
+                // Установка фиксированных размеров
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+
+                document.getElementById('takePhotoButton').classList.remove('disabled');
+            };
+        })
+        .catch(error => console.error('Ошибка доступа к камере.', error));
+}
+
+// Съемка фотографии
+function takePhoto() {
+    const video = document.querySelector('#video');
+    const canvas = document.querySelector('#canvas');
+    const preview = document.querySelector('#preview');
+    const context = canvas.getContext('2d');
+
+    // Сохранение изображения в фиксированном размере
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob(blob => {
+        photoBlob = blob;
+        const url = URL.createObjectURL(blob);
+        preview.src = url;
+        preview.style.display = 'block';
+        video.style.display = 'none';
+        document.getElementById('photoBlob').value = url;
+        document.getElementById('retryButton').classList.remove('disabled');
+        document.getElementById('sendButton').classList.remove('disabled');
+    });
+
+    stopCamera();
+    document.getElementById('takePhotoButton').classList.add('disabled');
+}
+
+// Пересъемка фотографии
+function retry() {
+    document.getElementById('photoBlob').value = '';
+    document.querySelector('#preview').style.display = 'none';
+    document.querySelector('#video').style.display = 'block';
+    document.getElementById('takePhotoButton').classList.remove('disabled');
+    document.getElementById('retryButton').classList.add('disabled');
+    document.getElementById('sendButton').classList.add('disabled');
+    startCamera();
+}
+
+// Отправка фотографии на сервер (или по электронной почте)
+function sendPhoto() {
+    // Здесь должен быть код отправки фото на сервер или на email через сервер
+    console.log('Фото отправлено!');
+    alert('Фотография отправлена!');
+}
+
+window.onload = function() {
+    loadFormData();
+};
+</script>
+
+</body>
+</html>

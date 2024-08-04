@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Participation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            
+        }
+
+        .container {
+            width: 320px;
+            height: 640px;
+            border: 3px solid #ce2659;
+            border-radius: 10px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            background-color: #f5d4b3;
+            position: relative;
+            
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background-color: #f5d4b3;
+            
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .back-button svg {
+            vertical-align: middle;
+        }
+
+        .image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            border: 2px solid #ce2659;
+            margin-top: 30px;
+        }
+
+        .image1 {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            margin-top: 30px;
+            border-radius: 10px;
+            border: 2px solid #ce2659;
+        }
+
+        .image2 {
+            width: 70px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            margin: 0 auto;
+            
+        }
+
+        .description {
+            padding: 5px;
+            text-align: center;
+            color: black;
+        }
+
+         .description1 {
+            padding: 5px;
+            text-align: center;
+            color: black;
+            font-size: 12px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 5px;
+        }
+
+        .button {
+            width: 120px;
+            height: 60px;
+            background-color: #007BFF;
+            color: white;
+            border: 2px solid #ce2659;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .button2 {
+            width: 120px;
+            height: 60px;
+            background-color: #007BFF;
+            color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .button3 {
+            width: 40px;
+            height: 40px;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            text-align: center;
+            padding: 5px;
+            opacity: 1; /* Кнопка активна */
+            transition: opacity 0.3s;
+        }
+
+        .button3.disabled {
+            opacity: 0.2; /* Кнопка неактивна */
+            pointer-events: none; /* Отключаем возможность нажатия */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+.form-group {
+    margin-bottom: 10px;
+    margin-top: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 5px;
+    color: black;
+}
+
+.social-links {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.social-links li {
+    margin-bottom: 5px;
+}
+
+#video-container {
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+    margin: 0 auto;
+}
+
+.video-controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+
+.video-controls .button3 {
+    margin: 0 5px;
+}
+
+.video-controls .button-label {
+    text-align: center;
+    font-size: 12px;
+    color: #FFFFFF;
+}
+
+         .table {
+            width: 100%;
+            height: 150px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 3px;
+            margin-top: 10px;
+        }
+        .cell {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            
+        }
+        .cell img {
+            width: 100%;
+            height: 80px; /* image height */
+            object-fit: cover;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="start-window">
+    <div class="image" style="background-image: url('img/sv10.png');"></div>
+    <div class="description">
+        <h2>Hurry up and get involved</h2>
+        <p>Pony Mony is holding a contest for the best unicorn drawing for kids. The winners will receive a big pink pony.</p>
+        <p>In this form you can look at the participants' drawings and take part in the promotion.</p>
+    </div>
+    <div class="buttons">
+        <div class="button" style="background-image: url('img/sv11.png');" onclick="showWatch()"></div>
+        <div class="button" style="background-image: url('img/sv12.png');" onclick="showParticipate()"></div>
+    </div>
+       <div class="description1">
+    <p>Please note that user contact details are not published for privacy reasons. The event will take place on the MTP Facebook channel.</p>
+</div>
+</div>
+
+<div class="container hidden" id="watch-window">
+    <div class="back-button" onclick="goBack()">
+        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M19 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H19v-2z"/>
+        </svg>
+    </div>
+    <div class="image1" style="background-image: url('img/sv10.png');"></div>
+    <div class="description">
+        <button class="button2" onclick="window.open('https://www.example.com')" style="background-image: url('img/sv11.png');"></button>
+
+         <div class="image2" style="background-image: url('img/sv9.png');  margin-top: 10px;"></div>
+        <h3>Additional MTP resources</h3>
+        
+        
+        <div class="table">
+    <div class="cell">
+        <img src="img/sv5.png" alt="Image 1">
+    </div>
+    <div class="cell">
+        <img src="img/sv6.png" alt="Image 2">
+        
+    </div>
+    <div class="cell">
+        <img src="img/sv7.png" alt="Image 3">
+        
+    </div>
+    <div class="cell">
+        <img src="img/sv8.png" alt="Image 4">
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="container hidden" id="participate-window">
+    <div class="back-button" onclick="goBack()">
+        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M19 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H19v-2z"/>
+        </svg>
+    </div>
+    <div class="description">
+        <form id="participation-form">
+            <div class="form-group">
+                <label for="nickname">Nickname:</label>
+                <input type="text" id="nickname" name="nickname" pattern="[A-Za-z0-9]+" required>
+                <small>Allowed characters A-Z,a-z,0-9</small>
+            </div>
+            <div class="form-group">
+                
+                <select id="country" name="country" required>
+                    <option value="" disabled selected>Choose a country</option>
+                    <option value="United States">United States</option>
+                    <option value="Canada">Canada</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Germany">Germany</option>
+                    <option value="France">France</option>
+                    <option value="India">India</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="phone">Contact phone number:</label>
+                <div style="display: flex; align-items: center;">
+                    <span style="padding: 8px; background-color: black; border:1px solid #ccc; border-radius: 5px 0 0 5px;">+</span>
+                    <input type="text" id="phone" name="phone" pattern="[0-9]{1,}" required style="flex: 1; border-radius: 0 5px 5px 0; border-left: none;" placeholder="123456789">
+                </div>
+                <small>Allowed characters 0-9</small>
+            </div>
+            <div class="form-group">
+                <div id="video-container">
+                    <video id="video" width="300" height="200" controls autoplay muted></video>
+                    <div class="video-controls">
+                        <div>
+                            <div class="button3" id="prepareButton" onclick="prepareRecording()" style="background-image: url('img/ar1.png');"></div>
+                            
+                        </div>
+                        <div>
+                            <div class="button3 disabled" id="startButton" onclick="startRecording()" style="background-image: url('img/ar2.png');"></div>
+                            
+                        </div>
+                        <div>
+                            <div class="button3 disabled" id="stopButton" onclick="stopRecording()" style="background-image: url('img/ar3.png');"></div>
+                            
+                        </div>
+                        <div>
+                            <div class="button3 disabled" id="playButton" onclick="playRecordedVideo()" style="background-image: url('img/ar4.png');"></div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="videoBlob" name="videoBlob">
+            </div>
+            <button type="submit" class="button">Send</button>
+        </form>
+    </div>
+</div>
+
+<script>
+let mediaRecorder;
+let recordedBlobs;
+let cameraStream;
+
+// Сохранение данных формы в localStorage
+function saveFormData() {
+    const form = document.getElementById('participation-form');
+    localStorage.setItem('formData', JSON.stringify({
+        nickname: form.nickname.value,
+        country: form.country.value,
+        phone: form.phone.value
+    }));
+}
+
+// Загрузка данных формы из localStorage
+function loadFormData() {
+    const formData = JSON.parse(localStorage.getItem('formData'));
+    if (formData) {
+        const form = document.getElementById('participation-form');
+        form.nickname.value = formData.nickname;
+        form.country.value = formData.country;
+        form.phone.value = formData.phone;
+    }
+}
+
+// Переключение на экран просмотра видео
+function showWatch() {
+    document.getElementById('start-window').style.display = 'none';
+    document.getElementById('watch-window').style.display = 'block';
+}
+
+// Переключение на экран участия
+function showParticipate() {
+    document.getElementById('start-window').style.display = 'none';
+    document.getElementById('participate-window').style.display = 'block';
+    loadFormData(); // Загружаем сохраненные данные формы
+}
+
+// Возврат на главный экран
+function goBack() {
+    document.getElementById('watch-window').style.display = 'none';
+    document.getElementById('participate-window').style.display = 'none';
+    document.getElementById('start-window').style.display = 'block';
+    disableCamera(); // Останавливаем камеру при возврате на главный экран
+}
+
+// Включение камеры
+function enableCamera() {
+    const videoElement = document.querySelector('#video');
+    const constraints = {
+        video: true,
+        audio: true
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(stream => {
+            cameraStream = stream;
+            videoElement.srcObject = stream;
+            document.getElementById('startButton').classList.remove('disabled'); // Активируем кнопку "Начать запись"
+        })
+        .catch(error => console.error('Ошибка доступа к медиаресурсам.', error));
+}
+
+// Отключение камеры
+function disableCamera() {
+    if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+    }
+}
+
+// Подготовка к записи видео
+function prepareRecording() {
+    enableCamera();
+    document.getElementById('prepareButton').classList.add('disabled');
+    document.getElementById('playButton').classList.add('disabled'); // Отключить кнопку "Просмотреть"
+}
+
+// Начало записи видео
+function startRecording() {
+    recordedBlobs = [];
+    if (!cameraStream) {
+        console.error('Камера не включена');
+        return;
+    }
+
+    mediaRecorder = new MediaRecorder(cameraStream, { mimeType: 'video/webm; codecs=vp9' });
+
+    mediaRecorder.ondataavailable = event => {
+        if (event.data && event.data.size > 0) {
+            recordedBlobs.push(event.data);
+        }
+    };
+
+    mediaRecorder.onstop = () => {
+        const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
+        const videoURL = window.URL.createObjectURL(superBuffer);
+        document.querySelector('#videoBlob').value = videoURL;
+
+        // Включить кнопку воспроизведения после завершения записи
+        document.getElementById('playButton').classList.remove('disabled');
+    };
+
+    mediaRecorder.start();
+
+    // Отключить кнопку начала записи, включить кнопку остановки записи
+    document.getElementById('startButton').classList.add('disabled');
+    document.getElementById('stopButton').classList.remove('disabled');
+
+    setTimeout(() => {
+        if (mediaRecorder.state === 'recording') {
+            stopRecording();
+        }
+    }, 10000); // Автоматическая остановка через 10 секунд
+
+    // Сохранение данных формы
+    saveFormData();
+}
+
+// Остановка записи видео
+function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+    }
+
+    // Отключить кнопку остановки записи, включить кнопку начала записи
+    document.getElementById('startButton').classList.remove('disabled');
+    document.getElementById('stopButton').classList.add('disabled');
+}
+
+// Воспроизведение записанного видео
+function playRecordedVideo() {
+    const videoElement = document.querySelector('#video');
+    const videoURL = document.querySelector('#videoBlob').value;
+    if (videoURL) {
+        disableCamera(); // Останавливаем камеру перед воспроизведением
+        videoElement.srcObject = null;
+        videoElement.src = videoURL;
+        videoElement.controls = true;
+        videoElement.play();
+
+        // Включаем кнопку "Записать видео" после завершения просмотра
+        videoElement.onended = () => {
+            document.getElementById('prepareButton').classList.remove('disabled');
+        };
+    } else {
+        console.error('Нет доступного видео для воспроизведения');
+    }
+}
+
+// Перезапись видео
+function reRecord() {
+    // Разрешить повторное включение камеры и запись нового видео
+    disableCamera();
+    document.getElementById('videoBlob').value = ''; // Сбросить предыдущий видеофайл
+    document.getElementById('prepareButton').classList.remove('disabled');
+    document.getElementById('startButton').classList.add('disabled');
+    document.getElementById('stopButton').classList.add('disabled');
+    document.getElementById('playButton').classList.add('disabled');
+    enableCamera(); // Включить камеру для новой записи
+}
+
+window.onload = function() {
+    loadFormData(); // Загружаем сохраненные данные формы при загрузке страницы
+};
+</script>
+
+</body>
+</html>
